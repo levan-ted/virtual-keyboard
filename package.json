@@ -1,0 +1,39 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "RS School task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/levan-ted/virtual-keyboard.git"
+  },
+  "author": "Levan Tediashvili",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/levan-ted/virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/levan-ted/virtual-keyboard#readme",
+  "devDependencies": {
+    "css-loader": "^6.4.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "node-sass": "^6.0.1",
+    "prettier": "^2.4.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.58.1",
+    "webpack-cli": "^4.9.0"
+  },
+  "dependencies": {}
+}
