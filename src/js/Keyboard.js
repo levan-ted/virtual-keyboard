@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
 import create from './utils/createElement.js';
 import Key from './Key.js';
@@ -43,7 +44,6 @@ export default class Keyboard {
       this.keyButtons.push(btn);
       document.querySelector('.keyboard').appendChild(btn.get());
     });
-    console.log(this.keyButtons);
     document.addEventListener('keydown', this.handleKeydownEvent.bind(this));
     document.addEventListener('keyup', this.handleKeyupEvent.bind(this));
     this.container.addEventListener(
@@ -102,13 +102,16 @@ export default class Keyboard {
   handleMouseDown(e) {
     e.stopPropagation();
     const keyDiv = e.target.closest('.kbd__button');
+    if (!keyDiv) return;
     const code = keyDiv.dataset.keycode;
+
     this.handleKeydownEvent({ code, type: e.type });
   }
 
   handleMouseUp(e) {
     e.stopPropagation();
     const keyDiv = e.target.closest('.kbd__button');
+    if (!keyDiv) return;
     const code = keyDiv.dataset.keycode;
     this.handleKeyupEvent({ code, type: e.type });
   }
