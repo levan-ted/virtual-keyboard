@@ -1,17 +1,15 @@
 # RSS Virtual Keyboard
 
-#### You should to create a virtual keyboard like this:
-![screenshot](images/virtual-keyboard.png)
+#### You should to create a virtual keyboard 
 
 ### Functional requirements:
 - design is at your discretion.
 - `index.html` file should be empty (all the necessary elements are generated with the usage of JS)
 - pressing a key on a physical keyboard highlights the key on the virtual keyboard:
-  ![screenshot](images/virtual-keyboard-1.png)
+
 
   **There may be differences in keystrokes on different operating systems (Windows, macOS). To avoid mistakes, it's necessary to specify in which OS the virtual keyboard was created**
 - if several buttons are pressed, all the pressed buttons are highlighted on the virtual keyboard (there're no exceptions for `Ctrl`, `Alt` and `Shift` as well)
-  ![screenshot](images/virtual-keyboard-2.png)
 - the virtual keyboard is able to switch between two language layouts (English + any other language). 
     - assigning a keyboard shortcut for switching keyboard layout is up to you.
     - the buttons on the virtual keyboard display symbols of a selected language
@@ -105,12 +103,3 @@ Example:
 `Penalties:`
 - [ ] there're errors related to the executable code (errors like `favicon.ico: Failed to load resource: the server responded with a status of 404` are not taken into account) or there're eslint-config-airbnb-base warnings: `-15`
 
-## Useful links:
-
-- [Demo](https://wonderful-swartz-d8b98d.netlify.com/)
-- [DOM](http://learn.javascript.info/document)
-- [Event](http://learn.javascript.info/event-details)
-- [An Introduction To DOM Events](https://www.smashingmagazine.com/2013/11/an-introduction-to-dom-events/)
-- [Keycode](https://keycode.info) (Please note that `event.keyCode` is deprecated)
-- [Keyboard events](https://learn.javascript.info/keyboard-events)
-- [Eslint (eslint-config-airbnb-base)](https://eslint.org/)
