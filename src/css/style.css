@@ -2,11 +2,41 @@
 
 :root {
   --active-key-color: #ffd488;
+  --active-key-hover: rgba(255, 212, 136, 0.5);
   --key-color: #ffffff;
   --bg-color: #eeeeee;
   --key-letter-color: #65554d;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main--container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.output--container {
+  width: 900px;
+  height: 200px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--key-letter-color);
+  align-self: center;
+}
+
+.output {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  outline: none;
+}
 .keyboard {
   display: grid;
   background-color: var(--bg-color);
@@ -15,6 +45,7 @@
   height: 300px;
   padding: 5px;
   border-radius: 5px;
+  align-self: center;
 }
 
 .kbd__button {
@@ -27,6 +58,15 @@
   justify-content: center;
   border-radius: 4px;
   cursor: pointer;
+  user-select: none;
+}
+
+.kbd__button:hover {
+  background: var(--active-key-hover);
+}
+
+.kbd__button:active {
+  background-color: var(--active-key-color);
 }
 
 .span2 {

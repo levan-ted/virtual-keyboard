@@ -23,11 +23,12 @@ export default class Keyboard {
 
   init(lang) {
     this.language = this.layout[lang];
+    this.outputContainer = create('div', 'output--container', null, main);
     this.output = create(
       'textarea',
       'output',
       null,
-      main,
+      this.outputContainer,
       ['placeholder', 'Start typing....'],
       ['rows', 5],
       ['cols', 50]
