@@ -10,6 +10,8 @@ export default class Key {
         /Meta|Caps|Enter|Delete|Backspace|Tab|Shift|Alt|Arrow|Control/
       )
     );
+    this.isLetter = Boolean(keyCode.match(/Key/));
+    this.isSymbol = !!(!this.isFnKey && !this.isLetter);
 
     if (shiftVal && shiftVal.toLowerCase() !== key) {
       this.sub = create('div', 'sub', this.shiftVal);

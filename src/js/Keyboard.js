@@ -43,7 +43,7 @@ export default class Keyboard {
       this.keyButtons.push(btn);
       document.querySelector('.keyboard').appendChild(btn.get());
     });
-
+    console.log(this.keyButtons);
     document.addEventListener('keydown', this.handleKeydownEvent.bind(this));
     document.addEventListener('keyup', this.handleKeyupEvent.bind(this));
   }
@@ -63,7 +63,6 @@ export default class Keyboard {
       this.isCaps = !this.isCaps;
       this.renderUpperCase(this.isCaps);
       keyObj.btn.classList.toggle('active');
-      console.log(keyObj);
     } else {
       keyObj.btn.classList.add('active');
     }
@@ -75,7 +74,7 @@ export default class Keyboard {
     if (code.match(/Control/) && this.altKey) this.changeLang();
     if (code.match(/Alt/) && this.ctrlKey) this.changeLang();
 
-    // Printing in output
+    // Printing values in output
     this.print(keyObj);
   }
 
@@ -121,34 +120,44 @@ export default class Keyboard {
   }
 
   renderUpperCase(isTrue) {
+    function activateSub(button) {
+      button.sub.classList.add('sub--active');
+      button.letter.classList.add('sub--inactive');
+    }
+
+    function deactivateSub(button) {
+      button.sub.classList.remove('sub--active');
+      button.letter.classList.remove('sub--inactive');
+    }
+
     if (isTrue) {
       this.keyButtons.forEach((button) => {
-        if (button.sub.innerHTML) {
+        if (button.isSymbol) {
           if (this.shiftKey) {
-            button.sub.classList.add('sub--active');
-            button.letter.classList.add('sub--inactive');
+            activateSub(button);
           }
         }
-        if (
-          this.isCaps &&
-          !this.shiftKey &&
-          !button.isFnKey &&
-          !button.sub.innerHTML
-        ) {
-          button.letter.innerHTML = button.shiftVal;
-        } else if (this.isCaps && this.shiftKey && !button.isFnKey) {
+        if (!(this.isCaps && this.shiftKey) && button.isLetter) {
+          button.sub.innerHTML = button.shiftVal;
+          button.letter.innerHTML = '';
+          activateSub(button);
+        } else if (this.isCaps && this.shiftKey && button.isLetter) {
+          button.sub.innerHTML =
+            button.key === button.shiftVal.toLowerCase() ? '' : button.shiftVal;
           button.letter.innerHTML = button.key;
-        } else if (!button.sub.innerHTML && !button.isFnKey) {
-          button.letter.innerHTML = button.shiftVal;
+          deactivateSub(button);
         }
       });
     } else {
       this.keyButtons.forEach((button) => {
-        if (button.sub.innerHTML && !button.isFnKey) {
-          button.sub.classList.remove('sub--active');
-          button.letter.classList.remove('sub--inactive');
-        } else if (!button.isFnKey) {
-          button.letter.innerHTML = this.isCaps ? button.shiftVal : button.key;
+        if (button.isSymbol) {
+          deactivateSub(button);
+        } else if (button.isLetter) {
+          // eslint-disable-next-line no-unused-expressions
+          button.sub.innerHTML =
+            button.key === button.shiftVal.toLowerCase() ? '' : button.shiftVal;
+          button.letter.innerHTML = button.key;
+          this.isCaps ? activateSub(button) : deactivateSub(button);
         }
       });
     }
@@ -163,9 +172,9 @@ export default class Keyboard {
     } else if (!this.isCaps && this.shiftKey) {
       symbol = keyObj.shiftVal;
     } else if (this.isCaps && !this.shiftKey) {
-      symbol = keyObj.sub.innerHTML ? keyObj.key : keyObj.shiftVal;
+      symbol = keyObj.isLetter ? keyObj.shiftVal : keyObj.key;
     } else {
-      symbol = keyObj.sub.innerHTML ? keyObj.shiftVal : keyObj.key;
+      symbol = keyObj.isLetter ? keyObj.key : keyObj.shiftVal;
     }
 
     const left = this.output.value.slice(0, cursorPosition);

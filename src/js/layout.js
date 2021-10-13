@@ -58,7 +58,7 @@ const layout = {
     { keyCode: 'ControlLeft', key: 'ctrl', shiftVal: null },
     { keyCode: 'MetaLeft', key: 'start', shiftVal: null },
     { keyCode: 'AltLeft', key: 'alt', shiftVal: null },
-    { keyCode: 'Space', key: ' ', shiftVal: null },
+    { keyCode: 'Space', key: ' ', shiftVal: ' ' },
     { keyCode: 'AltRight', key: 'alt', shiftVal: null },
     { keyCode: 'ControlRight', key: 'ctrl', shiftVal: null },
     { keyCode: 'ArrowLeft', key: '◀', shiftVal: null },
