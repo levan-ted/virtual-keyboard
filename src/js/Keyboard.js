@@ -44,54 +44,54 @@ export default class Keyboard {
       document.querySelector('.keyboard').appendChild(btn.get());
     });
 
-    document.addEventListener('keydown', this.handleEvent.bind(this));
-    document.addEventListener('keyup', this.handleEvent.bind(this));
+    document.addEventListener('keydown', this.handleKeydownEvent.bind(this));
+    document.addEventListener('keyup', this.handleKeyupEvent.bind(this));
   }
 
-  handleEvent(e) {
+  handleKeydownEvent(e) {
     if (e.stopPropagation) e.stopPropagation();
     const { code, type } = e;
     const keyObj = this.keyButtons.find((key) => key.keyCode === code);
     this.output.focus();
 
-    if (type.match(/keydown|mousedown/)) {
-      if (type.match(/key/)) e.preventDefault();
+    if (type.match(/key/)) e.preventDefault();
 
-      if (code.match(/Shift/)) this.shiftKey = true;
-      if (this.shiftKey) this.renderUpperCase(true);
+    if (code.match(/Shift/)) this.shiftKey = true;
+    if (this.shiftKey) this.renderUpperCase(true);
 
-      if (code.match(/Caps/)) {
-        this.isCaps = !this.isCaps;
-        this.renderUpperCase(this.isCaps);
-        keyObj.btn.classList.toggle('active');
-        console.log(keyObj);
-      } else {
-        keyObj.btn.classList.add('active');
-      }
+    if (code.match(/Caps/)) {
+      this.isCaps = !this.isCaps;
+      this.renderUpperCase(this.isCaps);
+      keyObj.btn.classList.toggle('active');
+      console.log(keyObj);
+    } else {
+      keyObj.btn.classList.add('active');
+    }
 
-      // Change Language
-      if (code.match(/Control/)) this.ctrlKey = true;
-      if (code.match(/Alt/)) this.altKey = true;
+    // Change Language
+    if (code.match(/Control/)) this.ctrlKey = true;
+    if (code.match(/Alt/)) this.altKey = true;
 
-      if (code.match(/Control/) && this.altKey) this.changeLang();
-      if (code.match(/Alt/) && this.ctrlKey) this.changeLang();
+    if (code.match(/Control/) && this.altKey) this.changeLang();
+    if (code.match(/Alt/) && this.ctrlKey) this.changeLang();
 
-      if (!this.isCaps) {
-        this.print(keyObj, this.shiftKey ? keyObj.shiftVal : keyObj.key);
-      } else if (this.shiftKey) {
-        this.print(keyObj, keyObj.sub.innerHTML ? keyObj.shiftVal : keyObj.key);
-      } else {
-        this.print(keyObj, keyObj.sub.innerHTML ? keyObj.shiftVal : keyObj.key);
-      }
-      // Keyup Mouseup events
-    } else if (type.match(/keyup|mouseup/)) {
-      if (!code.match(/Caps/)) keyObj.btn.classList.remove('active');
-      if (code.match(/Control/)) this.ctrlKey = false;
-      if (code.match(/Alt/)) this.altKey = false;
-      if (code.match(/Shift/)) {
-        this.shiftKey = false;
-        this.renderUpperCase(false);
-      }
+    // Printing in output
+    this.print(keyObj);
+  }
+
+  handleKeyupEvent(e) {
+    if (e.stopPropagation) e.stopPropagation();
+    const { code, type } = e;
+    const keyObj = this.keyButtons.find((key) => key.keyCode === code);
+
+    if (type.match(/key/)) e.preventDefault();
+
+    if (!code.match(/Caps/)) keyObj.btn.classList.remove('active');
+    if (code.match(/Control/)) this.ctrlKey = false;
+    if (code.match(/Alt/)) this.altKey = false;
+    if (code.match(/Shift/)) {
+      this.shiftKey = false;
+      this.renderUpperCase(false);
     }
   }
 
@@ -147,25 +147,27 @@ export default class Keyboard {
         if (button.sub.innerHTML && !button.isFnKey) {
           button.sub.classList.remove('sub--active');
           button.letter.classList.remove('sub--inactive');
-
-          if (!this.isCaps) {
-            button.letter.innerHTML = button.key;
-          } else if (this.isCaps) {
-            button.letter.innerHTML = button.shiftVal;
-          }
         } else if (!button.isFnKey) {
-          if (this.isCaps) {
-            button.letter.innerHTML = button.shiftVal;
-          } else {
-            button.letter.innerHTML = button.key;
-          }
+          button.letter.innerHTML = this.isCaps ? button.shiftVal : button.key;
         }
       });
     }
   }
 
-  print(keyObj, symbol) {
+  print(keyObj) {
     let cursorPosition = this.output.selectionStart;
+    let symbol;
+
+    if (!this.isCaps && !this.shiftKey) {
+      symbol = keyObj.key;
+    } else if (!this.isCaps && this.shiftKey) {
+      symbol = keyObj.shiftVal;
+    } else if (this.isCaps && !this.shiftKey) {
+      symbol = keyObj.sub.innerHTML ? keyObj.key : keyObj.shiftVal;
+    } else {
+      symbol = keyObj.sub.innerHTML ? keyObj.shiftVal : keyObj.key;
+    }
+
     const left = this.output.value.slice(0, cursorPosition);
     const right = this.output.value.slice(cursorPosition);
 
