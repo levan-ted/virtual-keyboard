@@ -46,6 +46,11 @@ export default class Keyboard {
     console.log(this.keyButtons);
     document.addEventListener('keydown', this.handleKeydownEvent.bind(this));
     document.addEventListener('keyup', this.handleKeyupEvent.bind(this));
+    this.container.addEventListener(
+      'mousedown',
+      this.handleMouseDown.bind(this)
+    );
+    this.container.addEventListener('mouseup', this.handleMouseUp.bind(this));
   }
 
   handleKeydownEvent(e) {
@@ -92,6 +97,20 @@ export default class Keyboard {
       this.shiftKey = false;
       this.renderUpperCase(false);
     }
+  }
+
+  handleMouseDown(e) {
+    e.stopPropagation();
+    const keyDiv = e.target.closest('.kbd__button');
+    const code = keyDiv.dataset.keycode;
+    this.handleKeydownEvent({ code, type: e.type });
+  }
+
+  handleMouseUp(e) {
+    e.stopPropagation();
+    const keyDiv = e.target.closest('.kbd__button');
+    const code = keyDiv.dataset.keycode;
+    this.handleKeyupEvent({ code, type: e.type });
   }
 
   changeLang() {
