@@ -1,5 +1,8 @@
 # RSS Virtual Keyboard
 
+[Open on gh-pages](https://levan-ted.github.io/virtual-keyboard/)
+
+
 #### You should to create a virtual keyboard 
 
 ### Functional requirements:
